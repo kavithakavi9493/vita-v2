@@ -1,28 +1,39 @@
 export const C = {
-  bgDeep:      '#F0EAE0',   // warm parchment — app outer bg
-  bgMid:       '#FAF7F2',   // soft warm white
-  card:        '#FFFFFF',   // pure white cards
-  border:      '#E8DDD0',   // warm light border
-  gold:        '#B8811A',   // dark gold — readable on white
-  goldDark:    '#8B6100',   // deeper gold
-  goldDeep:    '#C9962C',   // medium gold
-  goldBg:      '#FEF8EC',   // very light gold bg
-  goldBorder:  '#EDD9A3',   // light gold border
+  bgDeep:      '#F0EAE0',
+  bgMid:       '#FAF7F2',
+  card:        '#FFFFFF',
+  border:      '#E8DDD0',
+
+  gold:        '#B8811A',
+  goldDark:    '#8B6100',
+  goldDeep:    '#C9962C',
+  goldBg:      '#FEF8EC',
+  goldBorder:  '#EDD9A3',
+
   white:       '#FFFFFF',
   offWhite:    '#F8F3EC',
-  text:        '#1A0E00',   // near-black warm — primary text
-  muted:       '#7A6E5F',   // warm muted text
-  subtle:      '#A09585',   // subtle text
-  onGold:      '#FFFFFF',   // text on gold buttons
+
+  text:        '#1A0E00',   // already dark (GOOD)
+  muted:       '#7A6E5F',
+  subtle:      '#A09585',
+
+  onGold:      '#FFFFFF',
+
   green:       '#15803D',
   red:         '#DC2626',
   orange:      '#D97706',
+
   purple:      '#7C3AED',
   purpleBg:    '#F5F3FF',
   purpleBorder:'#DDD6FE',
-  navy:        '#1E3A5F',   // premium navy accent
+
+  navy:        '#1E3A5F',
   navyBg:      '#EEF2F8',
+
   whatsapp:    '#25D366',
+
+  // ADD THIS NEW COLOR FOR HEADINGS
+  heading:     '#1A0E00'
 }
 
 export const G = {
