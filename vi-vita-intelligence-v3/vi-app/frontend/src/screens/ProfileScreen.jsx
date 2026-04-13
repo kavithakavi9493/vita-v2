@@ -37,16 +37,15 @@ export default function ProfileScreen() {
   })
 
   const [showLogout, setShowLogout] = useState(false)
-
   const [showDelete, setShowDelete] = useState(false)
 
 
 
   const toggleNotif = (k) => {
 
-    setNotifs(n => ({
-      ...n,
-      [k]: !n[k]
+    setNotifs(prev => ({
+      ...prev,
+      [k]: !prev[k]
     }))
   }
 
@@ -95,8 +94,8 @@ export default function ProfileScreen() {
       onClick={onPress}
       style={{
         display: 'flex',
-        gap: 12,
         alignItems: 'center',
+        gap: 12,
         padding: '12px 0',
         borderBottom: `1px solid ${C.border}`,
         cursor: onPress ? 'pointer' : 'default'
@@ -112,8 +111,7 @@ export default function ProfileScreen() {
           border: `1px solid ${danger ? C.red : C.goldBorder}`,
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: 16
+          justifyContent: 'center'
         }}
       >
         {icon}
@@ -132,6 +130,8 @@ export default function ProfileScreen() {
         >
           {label}
         </div>
+
+
 
         {sub && (
 
@@ -184,14 +184,28 @@ export default function ProfileScreen() {
 
 
 
+  const stats = [
+
+    { label: 'VitaScore', value: vitaScore, color: C.gold },
+    { label: 'Lifestyle', value: lifestyleScore, color: C.gold },
+    { label: 'Mental', value: mentalScore, color: C.purple },
+    { label: 'Perform', value: performanceScore, color: C.gold }
+
+  ]
+
+
+
   return (
 
     <ScreenWrapper>
 
+      {/* header */}
+
       <div
         style={{
           background: C.bgMid,
-          padding: '20px'
+          padding: 20,
+          textAlign: 'center'
         }}
       >
 
@@ -210,186 +224,131 @@ export default function ProfileScreen() {
 
 
 
-        <div style={{ textAlign: 'center' }}>
-
-          <div
-            style={{
-              width: 80,
-              height: 80,
-              borderRadius: '50%',
-              background: C.gold,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: 32,
-              fontWeight: 700,
-              color: C.onGold,
-              margin: '0 auto 10px'
-            }}
-          >
-            {(userName || 'U')[0]}
-          </div>
+        <div
+          style={{
+            width: 80,
+            height: 80,
+            borderRadius: '50%',
+            background: C.gold,
+            margin: '10px auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 30,
+            color: C.onGold
+          }}
+        >
+          {(userName || 'U')[0]}
+        </div>
 
 
 
-          <div
-            style={{
-              color: C.text,
-              fontSize: 20,
-              fontWeight: 700
-            }}
-          >
-            {userName || 'User'}
-          </div>
+        <div
+          style={{
+            color: C.text,
+            fontSize: 20,
+            fontWeight: 700
+          }}
+        >
+          {userName || 'User'}
+        </div>
 
 
+
+        <div
+          style={{
+            color: C.muted
+          }}
+        >
+          +91 {phone}
+        </div>
+
+
+
+        {email && (
 
           <div
             style={{
               color: C.muted
             }}
           >
-            +91 {phone}
+            {email}
           </div>
 
-        </div>
+        )}
 
       </div>
 
 
 
-      <div style={{ padding: 20 }}>
+      {/* scores */}
 
-        <div
-          style={{
-            background: C.card,
-            border: `1px solid ${C.border}`,
-            borderRadius: 16,
-            padding: 16,
-            marginBottom: 14
-          }}
-        >
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 1fr 1fr',
+          gap: 10,
+          padding: 20
+        }}
+      >
 
-          <div
-            style={{
-              color: C.gold,
-              fontSize: 12,
-              fontWeight: 700
-            }}
-          >
-            PERSONAL INFORMATION
-          </div>
-
-
-
-          <Row icon="👤" label="Full Name" value={userName} />
-
-          <Row icon="📱" label="Phone" value="Verified" />
-
-          <Row icon="✉️" label="Email" value={email || 'Not added'} />
-
-          <Row icon="🎂" label="Age Group" value={ageGroup} />
-
-        </div>
-
-
-
-        <div
-          style={{
-            background: C.card,
-            border: `1px solid ${C.border}`,
-            borderRadius: 16,
-            padding: 16,
-            marginBottom: 14
-          }}
-        >
+        {stats.map(s => (
 
           <div
+            key={s.label}
             style={{
-              color: C.gold,
-              fontSize: 12,
-              fontWeight: 700
+              background: C.card,
+              border: `1px solid ${C.border}`,
+              borderRadius: 12,
+              padding: 10,
+              textAlign: 'center'
             }}
           >
-            MY SCORES
-          </div>
-
-
-
-          <Row label="VitaScore" value={vitaScore} />
-
-          <Row label="Lifestyle" value={lifestyleScore} />
-
-          <Row label="Mental" value={mentalScore} />
-
-          <Row label="Performance" value={performanceScore} />
-
-        </div>
-
-
-
-        <div
-          style={{
-            background: C.card,
-            border: `1px solid ${C.border}`,
-            borderRadius: 16,
-            padding: 16,
-            marginBottom: 14
-          }}
-        >
-
-          <div
-            style={{
-              color: C.gold,
-              fontSize: 12,
-              fontWeight: 700
-            }}
-          >
-            NOTIFICATIONS
-          </div>
-
-
-
-          {['daily','session','prog','offers'].map(k => (
 
             <div
-              key={k}
               style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginTop: 10
+                color: s.color,
+                fontWeight: 700
               }}
             >
-
-              <div style={{ color: C.text }}>{k}</div>
-
-              <Toggle
-                on={notifs[k]}
-                onToggle={() => toggleNotif(k)}
-              />
-
+              {s.value}
             </div>
 
-          ))}
-
-        </div>
 
 
+            <div
+              style={{
+                color: C.muted,
+                fontSize: 12
+              }}
+            >
+              {s.label}
+            </div>
+
+          </div>
+
+        ))}
+
+      </div>
+
+
+
+      {/* logout */}
+
+      <div style={{ padding: 20 }}>
 
         <button
           onClick={() => setShowLogout(true)}
           style={{
             width: '100%',
             height: 48,
-            borderRadius: 12,
             background: C.orange,
             border: 'none',
-            color: C.white,
-            fontWeight: 600,
-            marginBottom: 10
+            borderRadius: 12,
+            color: C.white
           }}
         >
-          Log out
+          Logout
         </button>
 
 
@@ -399,14 +358,14 @@ export default function ProfileScreen() {
           style={{
             width: '100%',
             height: 48,
-            borderRadius: 12,
+            marginTop: 10,
             background: C.red,
             border: 'none',
-            color: C.white,
-            fontWeight: 600
+            borderRadius: 12,
+            color: C.white
           }}
         >
-          Delete account
+          Delete Account
         </button>
 
       </div>
@@ -415,13 +374,9 @@ export default function ProfileScreen() {
 
       {showLogout && (
 
-        <div>
-
-          <button onClick={handleLogout}>
-            Confirm logout
-          </button>
-
-        </div>
+        <button onClick={handleLogout}>
+          Confirm logout
+        </button>
 
       )}
 
@@ -429,13 +384,9 @@ export default function ProfileScreen() {
 
       {showDelete && (
 
-        <div>
-
-          <button onClick={handleDelete}>
-            Confirm delete
-          </button>
-
-        </div>
+        <button onClick={handleDelete}>
+          Confirm delete
+        </button>
 
       )}
 
