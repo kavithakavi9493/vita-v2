@@ -1,0 +1,84 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Users ────────────────────────────────────────────
+    // Users can only read/write their own document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // Sub-collections: progress logs, milestones, saved videos
+      match /progress/{date} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      match /milestones/{milestoneId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      match /savedVideos/{videoId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // ── User Responses ───────────────────────────────────
+    match /user_responses/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // ── Orders ───────────────────────────────────────────
+    match /orders/{orderId} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null;
+      // Only backend can update order status (via admin SDK)
+      allow update: if false;
+    }
+
+    // ── Payments ─────────────────────────────────────────
+    match /payments/{paymentId} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null;
+      allow update: if false;
+    }
+
+    // ── Products ─────────────────────────────────────────
+    // Anyone logged in can read products
+    match /products/{productId} {
+      allow read: if request.auth != null;
+      allow write: if false; // Admin only via Firebase console
+    }
+
+    // ── Coupons ──────────────────────────────────────────
+    match /coupons/{code} {
+      allow read: if request.auth != null;
+      allow write: if false; // Admin only
+    }
+
+    // ── Videos ───────────────────────────────────────────
+    match /videos/{videoId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // ── Sessions ─────────────────────────────────────────
+    match /sessions/{sessionId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // ── Consultations ────────────────────────────────────
+    match /consultations/{id} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null;
+      allow update: if false;
+    }
+
+    // ── Notifications ────────────────────────────────────
+    match /notifications/{userId}/inbox/{notifId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
