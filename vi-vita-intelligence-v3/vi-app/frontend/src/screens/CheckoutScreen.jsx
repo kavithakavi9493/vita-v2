@@ -29,7 +29,7 @@ function Field({ label, value, onChange, type = 'text', maxLength, readOnly = fa
 
 export default function CheckoutScreen() {
   const navigate  = useNavigate()
-  const { state } = useApp()
+  const { state, update } = useApp()
   const { userName, phone, email, planType, selectedAmount, userId } = state
 
   const [form, setForm] = useState({ name: userName || '', phone: phone || '', pincode: '', addr1: '', addr2: '', city: '', state: '' })
@@ -130,6 +130,7 @@ export default function CheckoutScreen() {
               }),
             })
             await updateDoc(doc(db, 'orders', orderRef.id), { status: 'paid', paymentId: response.razorpay_payment_id })
+            update({ hasCompletedQuiz: true })
             navigate('/success', { replace: true })
           } catch {
             navigate('/failure', { replace: true })

@@ -92,7 +92,6 @@ export default function Quiz3Screen() {
         libidoLevel:     answers.q7,
         timingControl:   answers.q8,
         erectionQuality: answers.q9,
-        hasCompletedQuiz: true,
       })
 
       navigate('/final-loading', { replace: true })
